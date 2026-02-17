@@ -149,7 +149,7 @@
 
         /* Contenedor principal de contenido */
         .content-wrapper {
-            max-width: 1100px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 50px 20px 80px;
             position: relative;
@@ -166,7 +166,6 @@
             position: relative;
             overflow: hidden;
             backdrop-filter: blur(10px);
-            min-height: 500px;
         }
 
         .content-box::before {
@@ -223,8 +222,6 @@
                 0 0 20px rgba(204, 0, 0, 0.8);
             margin-bottom: 20px;
             margin-top: 30px;
-            transform: rotate(-1deg);
-            display: inline-block;
         }
 
         .text-area h2:first-child {
@@ -250,39 +247,68 @@
             text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
         }
 
-        .text-area ul, .text-area ol {
-            margin: 20px 0;
-            padding-left: 30px;
-        }
-
-        .text-area li {
-            margin-bottom: 12px;
-            line-height: 1.7;
-        }
-
-        .text-area ul li::marker {
-            content: '🕷️ ';
-            font-size: 1.2rem;
-        }
-
-        /* Highlight box */
-        .highlight {
-            background: rgba(0, 212, 255, 0.1);
-            border-left: 5px solid #00d4ff;
+        /* Estilo para los items del glosario */
+        .material-item {
+            background: rgba(0, 212, 255, 0.05);
+            border-left: 4px solid #00d4ff;
             padding: 20px;
             margin: 25px 0;
             border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.15);
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            transition: all 0.3s ease;
         }
 
-        /* Código inline */
-        .text-area code {
-            background: rgba(204, 0, 0, 0.2);
+        .material-item:hover {
+            background: rgba(0, 212, 255, 0.1);
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
+            transform: translateX(5px);
+        }
+
+        .material-image {
+            flex-shrink: 0;
+            width: 150px;
+            height: 150px;
+            object-fit: contain;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 10px;
+            border: 2px solid rgba(0, 212, 255, 0.3);
+        }
+
+        .material-content {
+            flex: 1;
+        }
+
+        .material-title {
+            font-size: 1.3rem;
+            color: #00d4ff;
+            text-shadow: 0 0 15px #00d4ff;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .material-description {
+            color: #fff;
+            line-height: 1.6;
+        }
+
+        .material-video {
+            margin-top: 10px;
+        }
+
+        .material-video a {
             color: #ffeb3b;
-            padding: 3px 8px;
-            border-radius: 5px;
-            font-family: 'Courier New', monospace;
-            font-size: 0.95rem;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .material-video a:hover {
+            color: #00d4ff;
+            text-shadow: 0 0 10px #00d4ff;
         }
 
         /* Footer */
@@ -325,12 +351,19 @@
                 font-size: 1rem;
             }
 
-            .text-area h2 {
-                font-size: 1.6rem;
+            .material-item {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
             }
 
-            .text-area h3 {
-                font-size: 1.3rem;
+            .material-image {
+                width: 120px;
+                height: 120px;
+            }
+
+            .material-title {
+                font-size: 1.2rem;
             }
         }
     </style>
@@ -342,7 +375,7 @@
     <header class="header">
         <div class="header-content">
             <h1 class="graffiti-title">GLOSARIO DE MATERIALES</h1>
-            <a href="index.html" class="back-button">← Volver al Inicio</a>
+            <a href="principios-electronica-arduino-mejorado.html" class="back-button">← Volver al Inicio</a>
         </div>
     </header>
 
@@ -350,86 +383,437 @@
     <div class="content-wrapper">
         <div class="content-box">
             <div class="text-area">
-                <!-- AQUÍ VA TODO TU CONTENIDO -->
+                <!-- GLOSARIO DE MATERIALES CON IMÁGENES -->
                 
-                <h2>🕷️ Glosario de Materiales</h2>
+                <h2>🕷️ Glosario de Materiales Arduino</h2>
                 
-                <ul>
-                    <li><strong>Protoboard</strong> - Placa de pruebas donde se insertan componentes electrónicos y cables para armar circuitos sin necesidad de soldar.</li>
-                    
-                    <li><strong>Protoboard de expansión</strong> - Facilita el uso entre Arduino y otros dispositivos, organizando mejor la circuitería y ampliando sus funciones.</li>
-                    
-                    <li><strong>Módulo LCD</strong> - Pantalla usada para mostrar información en proyectos Arduino; es fácil de usar y económica.</li>
-                    
-                    <li><strong>Sensor ultrasónico</strong> - Mide la distancia mediante ondas sonoras ultrasónicas reflejadas en objetos.</li>
-                    
-                    <li><strong>Sensor de temperatura y humedad</strong> - Mide condiciones del aire mediante señal digital y es sencillo de usar.</li>
-                    
-                    <li><strong>Arduino Nano</strong> - Placa pequeña para prototipos, con puerto USB integrado y microcontrolador ATMega328.</li>
-                    
-                    <li><strong>Módulo de joystick</strong> - Permite controlar dispositivos electrónicos o movimientos en proyectos robóticos.</li>
-                    
-                    <li><strong>Controlador de motor paso a paso</strong> - Envía señales al motor para que se mueva en pasos precisos.</li>
-                    
-                    <li><strong>Motor paso a paso</strong> - Convierte señales eléctricas en movimientos mecánicos por pasos.</li>
-                    
-                    <li><strong>Servomotor</strong> - Permite controlar posición y velocidad de giro con precisión.</li>
-                    
-                    <li><strong>Motor de 3 a 6 voltios</strong> - Genera energía mecánica para distintos proyectos electrónicos.</li>
-                    
-                    <li><strong>Aspa de ventilador</strong> - Mueve aire y genera corrientes para refrescar el ambiente.</li>
-                    
-                    <li><strong>Módulo de relé de 5V</strong> - Interruptor eléctrico controlado por voltaje bajo como Arduino.</li>
-                    
-                    <li><strong>Potenciómetro</strong> - Resistencia variable que regula el flujo de corriente eléctrica.</li>
-                    
-                    <li><strong>Buzzer pasivo</strong> - Convierte señales eléctricas en sonido y necesita señal externa.</li>
-                    
-                    <li><strong>Buzzer activo</strong> - Emite sonido con frecuencias específicas generadas por Arduino.</li>
-                    
-                    <li><strong>Botones</strong> - Funcionan como interruptores al ser presionados.</li>
-                    
-                    <li><strong>Pantalla de 4 dígitos y 7 segmentos</strong> - Muestra números mediante segmentos que se encienden o apagan.</li>
-                    
-                    <li><strong>Pantalla de 1 dígito y 7 segmentos</strong> - Display que muestra números con segmentos luminosos.</li>
-                    
-                    <li><strong>Interruptores de membrana</strong> - Dispositivo para introducir datos o representar números.</li>
-                    
-                    <li><strong>Control remoto</strong> - Envía señales infrarrojas codificadas para controlar dispositivos.</li>
-                    
-                    <li><strong>Registro de turnos 74HC595</strong> - Convierte datos en serie a salidas en paralelo.</li>
-                    
-                    <li><strong>Fotoresistencia</strong> - Resistencia que cambia según la intensidad de la luz.</li>
-                    
-                    <li><strong>Cables tipo Dupont</strong> - Cables para conectar componentes en protoboard.</li>
-                    
-                    <li><strong>Cable USB</strong> - Permite conectar Arduino a la computadora.</li>
-                    
-                    <li><strong>Clip de batería con conector</strong> - Permite alimentar Arduino con batería de 9V.</li>
-                    
-                    <li><strong>Resistor</strong> - Componente que introduce resistencia eléctrica en un circuito.</li>
-                    
-                    <li><strong>LED RGB</strong> - Emite diferentes colores combinando rojo, verde y azul.</li>
-                    
-                    <li><strong>LEDs</strong> - Diodos que emiten luz cuando pasa corriente.</li>
-                    
-                    <li><strong>Circuito integrado L293D</strong> - Controla motores de corriente continua o paso a paso.</li>
-                    
-                    <li><strong>Sensor de inclinación</strong> - Detecta cuando un objeto supera cierta inclinación.</li>
-                    
-                    <li><strong>Transistor PN2222</strong> - Amplificador de señal de uso general.</li>
-                    
-                    <li><strong>Diodo 1N4007</strong> - Permite el paso de corriente en un solo sentido.</li>
-                    
-                    <li><strong>Termistor</strong> - Sensor cuya resistencia cambia con la temperatura.</li>
-                    
-                    <li><strong>Cable jumper</strong> - Cable para conectar elementos en protoboard.</li>
-                    
-                    <li><strong>Adaptador de poder</strong> - Convierte corriente alterna en corriente continua para Arduino.</li>
-                </ul>
+                <!-- Arduino Nano -->
+                <div class="material-item">
+                    <img src="https://roborealm-cbtis.github.io/Project-Roborealm/materiales/img/ArduinoNano.jpg" alt="Arduino Nano" class="material-image">
+                    <div class="material-content">
+                        <div class="material-title">Arduino Nano</div>
+                        <div class="material-description">
+                            Placa pequeña que facilita la creación rápida de prototipos en una protoboard. Viene con un conector mini USB, un chip ATMega328, y dos entradas analógicas adicionales en comparación con otras placas Arduino.
+                        </div>
+                        <div class="material-video">
+                            <a href="https://youtu.be/Jztdg_ZyDGQ" target="_blank">📹 VIDEO DE EXPLICACIÓN</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Protoboard -->
+                <div class="material-item">
+                    <img src="https://roborealm-cbtis.github.io/Project-Roborealm/materiales/img/Protoboard.jpg" alt="Protoboard" class="material-image">
+                    <div class="material-content">
+                        <div class="material-title">Protoboard</div>
+                        <div class="material-description">
+                            Placa de pruebas en los que se pueden insertar elementos electrónicos y cables con los que se arman circuitos sin la necesidad de soldar ninguno de los componentes.
+                        </div>
+                        <div class="material-video">
+                            <a href="https://youtu.be/0CVVgiPBBEI" target="_blank">📹 VIDEO DE EXPLICACIÓN</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Protoboard de expansión -->
+                <div class="material-item">
+                    <img src="https://roborealm-cbtis.github.io/Project-Roborealm/materiales/img/ProtoboardExpansionn.jpg" alt="Protoboard de expansión" class="material-image">
+                    <div class="material-content">
+                        <div class="material-title">Protoboard de Expansión</div>
+                        <div class="material-description">
+                            Permite facilitar el uso entre la plataforma Arduino y cualquier otro hardware. Este módulo se encarga de expandir la funcionalidad de cualquier plataforma Arduino, generando un mayor orden en la circuitería.
+                        </div>
+                        <div class="material-video">
+                            <a href="https://youtu.be/v0c41TjI3iw" target="_blank">📹 VIDEO DE EXPLICACIÓN</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Módulo LCD -->
+                <div class="material-item">
+                    <img src="https://roborealm-cbtis.github.io/Project-Roborealm/materiales/img/ModuloLCD.jpg" alt="Módulo LCD" class="material-image">
+                    <div class="material-content">
+                        <div class="material-title">Módulo LCD</div>
+                        <div class="material-description">
+                            Se utiliza para mostrar información en proyectos de Arduino. Los LCD Arduino son populares debido a su facilidad de uso y bajo costo.
+                        </div>
+                        <div class="material-video">
+                            <a href="https://www.youtube.com/watch?v=1glyqIF7Y3k" target="_blank">📹 VIDEO DE EXPLICACIÓN</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sensor ultrasónico -->
+                <div class="material-item">
+                    <img src="https://roborealm-cbtis.github.io/Project-Roborealm/materiales/img/SensorUltrasonico.jpg" alt="Sensor ultrasónico" class="material-image">
+                    <div class="material-content">
+                        <div class="material-title">Sensor Ultrasónico</div>
+                        <div class="material-description">
+                            Es un transductor que mide la distancia de un objeto por medio del rebote de una onda sonora que trabaja en el rango de los ultrasonidos. No funciona en lugares sin aire ya que por medio de este se transporta la onda sonora.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sensor de temperatura y humedad -->
+                <div class="material-item">
+                    <img src="https://roborealm-cbtis.github.io/Project-Roborealm/materiales/img/SensorTempyHumedad.jpg" alt="Sensor de temperatura y humedad" class="material-image">
+                    <div class="material-content">
+                        <div class="material-title">Sensor de Temperatura y Humedad</div>
+                        <div class="material-description">
+                            Es un termistor para medir el aire circundante, y muestra los datos mediante una señal digital en el pin de datos. Es bastante simple de usar tanto en hardware como software.
+                        </div>
+                        <div class="material-video">
+                            <a href="https://youtu.be/ZBpCxgrVPy4" target="_blank">📹 VIDEO DE EXPLICACIÓN</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Joystick -->
+                <div class="material-item">
+                    <img src="https://roborealm-cbtis.github.io/Project-Roborealm/materiales/img/Joystick.jpg" alt="Módulo de joystick" class="material-image">
+                    <div class="material-content">
+                        <div class="material-title">Módulo de Joystick</div>
+                        <div class="material-description">
+                            Permite controlar y manejar determinados aparatos electrónicos. Normalmente se utilizan para proyectos robóticos en el cual se necesitan para la movilidad analógica de las articulaciones de un brazo robótico.
+                        </div>
+                        <div class="material-video">
+                            <a href="https://youtu.be/CiZF2R8loC8" target="_blank">📹 VIDEO DE EXPLICACIÓN</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Controlador de motor paso a paso -->
+                <div class="material-item">
+                    <img src="https://roborealm-cbtis.github.io/Project-Roborealm/materiales/img/ControladorMotorPaso.jpg" alt="Controlador de motor paso a paso" class="material-image">
+                    <div class="material-content">
+                        <div class="material-title">Controlador de Motor Paso a Paso</div>
+                        <div class="material-description">
+                            Se encarga de enviar las señales adecuadas al motor para que se mueva en incrementos discretos, conocidos como pasos. Estos pasos pueden ser muy pequeños, lo que permite un control preciso del movimiento del motor.
+                        </div>
+                        <div class="material-video">
+                            <a href="https://youtu.be/t6Du1ZBK0Mg" target="_blank">📹 VIDEO DE EXPLICACIÓN</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Motor paso a paso -->
+                <div class="material-item">
+                    <img src="https://roborealm-cbtis.github.io/Project-Roborealm/materiales/img/MotorPaso.jpg" alt="Motor paso a paso" class="material-image">
+                    <div class="material-content">
+                        <div class="material-title">Motor Paso a Paso</div>
+                        <div class="material-description">
+                            Un motor paso a paso es un aparato que transforma señales eléctricas en movimientos mecánicos discretos. Su eje gira en pasos o saltos cada vez que recibe pulsos eléctricos adecuados.
+                        </div>
+                        <div class="material-video">
+                            <a href="https://youtu.be/Z27_I3W4dno" target="_blank">📹 VIDEO DE EXPLICACIÓN</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Servomotor -->
+                <div class="material-item">
+                    <img src="https://roborealm-cbtis.github.io/Project-Roborealm/materiales/img/Servomotor.jpg" alt="Servomotor" class="material-image">
+                    <div class="material-content">
+                        <div class="material-title">Servomotor</div>
+                        <div class="material-description">
+                            Permite mantener una posición que indiquemos, siempre que esté dentro del rango de operación del propio dispositivo. También permite controlar la velocidad de giro.
+                        </div>
+                        <div class="material-video">
+                            <a href="https://youtu.be/dyjSudQcCR0" target="_blank">📹 VIDEO DE EXPLICACIÓN</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Motor de 3 a 6 voltios -->
+                <div class="material-item">
+                    <img src="https://roborealm-cbtis.github.io/Project-Roborealm/materiales/img/Motor.jpg" alt="Motor de 3 a 6 voltios" class="material-image">
+                    <div class="material-content">
+                        <div class="material-title">Motor de 3 a 6 Voltios</div>
+                        <div class="material-description">
+                            Se utiliza específicamente para proporcionar energía mecánica en una variedad de dispositivos y proyectos.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Aspa de ventilador -->
+                <div class="material-item">
+                    <img src="https://roborealm-cbtis.github.io/Project-Roborealm/materiales/img/Aspa.jpg" alt="Aspa de ventilador" class="material-image">
+                    <div class="material-content">
+                        <div class="material-title">Aspa de Ventilador</div>
+                        <div class="material-description">
+                            Sirve para mover el aire y crear corrientes de aire dentro de un espacio lo que ayuda a refrescar el ambiente.
+                        </div>
+                        <div class="material-video">
+                            <a href="https://youtu.be/ElPYk8wsOkQ" target="_blank">📹 VIDEO DE EXPLICACIÓN</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Módulo de relé -->
+                <div class="material-item">
+                    <img src="https://roborealm-cbtis.github.io/Project-Roborealm/materiales/img/Rele.jpg" alt="Módulo de relé de 5V" class="material-image">
+                    <div class="material-content">
+                        <div class="material-title">Módulo de Relé de 5V</div>
+                        <div class="material-description">
+                            Un relé es un interruptor mecánico operado eléctricamente que se puede encender o apagar, dejando pasar la corriente o no, y se puede controlar con voltajes bajos, como los 5V utilizados en la alimentación de un Arduino.
+                        </div>
+                        <div class="material-video">
+                            <a href="https://youtu.be/z8Jgv_Vs1oM" target="_blank">📹 VIDEO DE EXPLICACIÓN</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Potenciómetro -->
+                <div class="material-item">
+                    <img src="https://roborealm-cbtis.github.io/Project-Roborealm/materiales/img/Potenciometro.jpg" alt="Potenciómetro" class="material-image">
+                    <div class="material-content">
+                        <div class="material-title">Potenciómetro</div>
+                        <div class="material-description">
+                            Sirve para limitar el flujo de corriente eléctrica de manera variable. Provocando una caída de tensión en relación a la resistividad. Básicamente es una resistencia variable.
+                        </div>
+                        <div class="material-video">
+                            <a href="https://youtu.be/i95mpcQm-7M" target="_blank">📹 VIDEO DE EXPLICACIÓN</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Buzzer pasivo -->
+                <div class="material-item">
+                    <img src="https://roborealm-cbtis.github.io/Project-Roborealm/materiales/img/BuzzerPas.jpg" alt="Buzzer pasivo" class="material-image">
+                    <div class="material-content">
+                        <div class="material-title">Buzzer Pasivo</div>
+                        <div class="material-description">
+                            Un buzzer pasivo o un altavoz son dispositivos que convierten una señal eléctrica en sonido. No tienen componentes electrónicos internos, así que necesitamos proporcionarles una señal eléctrica para producir el sonido que queremos.
+                        </div>
+                        <div class="material-video">
+                            <a href="https://youtu.be/gI0crTeEVEk" target="_blank">📹 VIDEO DE EXPLICACIÓN</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Buzzer activo -->
+                <div class="material-item">
+                    <img src="https://roborealm-cbtis.github.io/Project-Roborealm/materiales/img/BuzzerAct.jpg" alt="Buzzer activo" class="material-image">
+                    <div class="material-content">
+                        <div class="material-title">Buzzer Activo</div>
+                        <div class="material-description">
+                            El zumbador pasivo es capaz de emitir cualquier frecuencia (inferior 2KHz) que le proporcionemos. Podemos generar fácilmente esta señal desde Arduino con la función tone.
+                        </div>
+                        <div class="material-video">
+                            <a href="https://youtu.be/R2a3Y1q7V5M" target="_blank">📹 VIDEO DE EXPLICACIÓN</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botones -->
+                <div class="material-item">
+                    <img src="https://roborealm-cbtis.github.io/Project-Roborealm/materiales/img/Boton.jpg" alt="Botones" class="material-image">
+                    <div class="material-content">
+                        <div class="material-title">Botones</div>
+                        <div class="material-description">
+                            Utilizado como switch o interruptor al momento de ser presionado. Funciona como contacto normalmente abierto.
+                        </div>
+                        <div class="material-video">
+                            <a href="https://youtu.be/w5lX53npaz0" target="_blank">📹 VIDEO DE EXPLICACIÓN</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pantalla de 4 dígitos -->
+                <div class="material-item">
+                    <img src="https://roborealm-cbtis.github.io/Project-Roborealm/materiales/img/Pantalla4.jpg" alt="Pantalla de 4 dígitos y 7 segmentos" class="material-image">
+                    <div class="material-content">
+                        <div class="material-title">Pantalla de 4 Dígitos y 7 Segmentos</div>
+                        <div class="material-description">
+                            Display básico capaz de mostrar hasta 4 números y tiene puntos digitales en cada dígito. Está compuesto de 7 segmentos que se pueden encender o apagar individualmente.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pantalla de 1 dígito -->
+                <div class="material-item">
+                    <img src="https://roborealm-cbtis.github.io/Project-Roborealm/materiales/img/Pantalla1.jpg" alt="Pantalla de 1 dígito y 7 segmentos" class="material-image">
+                    <div class="material-content">
+                        <div class="material-title">Pantalla de 1 Dígito y 7 Segmentos</div>
+                        <div class="material-description">
+                            Display que muestra números con segmentos luminosos. Los 7 segmentos se encienden y/o apagarán en función del número a representar.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interruptores de membrana -->
+                <div class="material-item">
+                    <img src="https://roborealm-cbtis.github.io/Project-Roborealm/materiales/img/InterruptoresMembrana.jpg" alt="Interruptores de membrana" class="material-image">
+                    <div class="material-content">
+                        <div class="material-title">Interruptores de Membrana</div>
+                        <div class="material-description">
+                            Se utiliza para representar números. Como su propio nombre indica, el display está compuesto por 7 segmentos, los cuales se encenderán y/o apagarán en función del número a representar.
+                        </div>
+                        <div class="material-video">
+                            <a href="https://youtu.be/SnTrMV_16CI" target="_blank">📹 VIDEO DE EXPLICACIÓN</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Control remoto -->
+                <div class="material-item">
+                    <img src="https://roborealm-cbtis.github.io/Project-Roborealm/materiales/img/Control.jpg" alt="Control remoto" class="material-image">
+                    <div class="material-content">
+                        <div class="material-title">Control Remoto</div>
+                        <div class="material-description">
+                            La señal enviada corresponde a un tren de pulsos infrarrojos cada vez que se presiona una tecla. Los pulsos forman un patrón único para cada tecla del control.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Registro de turnos -->
+                <div class="material-item">
+                    <img src="https://roborealm-cbtis.github.io/Project-Roborealm/materiales/img/RegistroTurnos74.jpg" alt="Registro de turnos 74HC595" class="material-image">
+                    <div class="material-content">
+                        <div class="material-title">Registro de Turnos 74HC595</div>
+                        <div class="material-description">
+                            Es un dispositivo que combina un pestillo tipo D con un registro de turnos dentro de un chip. Recibe datos en serie y luego los envía a través de varios pines en paralelo.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fotoresistencia -->
+                <div class="material-item">
+                    <img src="https://roborealm-cbtis.github.io/Project-Roborealm/materiales/img/Fotoresistencia.jpg" alt="Fotoresistencia" class="material-image">
+                    <div class="material-content">
+                        <div class="material-title">Fotoresistencia</div>
+                        <div class="material-description">
+                            Es una resistencia que varía en función de la luz que incide sobre su superficie. Cuanto mayor sea la intensidad de la luz menor será su resistencia y viceversa.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cables tipo Dupont -->
+                <div class="material-item">
+                    <img src="https://roborealm-cbtis.github.io/Project-Roborealm/materiales/img/CablesDupont.jpg" alt="Cables tipo Dupont" class="material-image">
+                    <div class="material-content">
+                        <div class="material-title">Cables Tipo Dupont</div>
+                        <div class="material-description">
+                            Es un cable con un conector en cada extremo, típicamente usado para conectar componentes entre sí en una placa de pruebas. Se usan para transferir señales eléctricas.
+                        </div>
+                        <div class="material-video">
+                            <a href="https://www.youtube.com/shorts/1O9XZBwQQX8" target="_blank">📹 VIDEO DE EXPLICACIÓN</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cable USB -->
+                <div class="material-item">
+                    <img src="https://roborealm-cbtis.github.io/Project-Roborealm/materiales/img/CableUSB.jpg" alt="Cable USB" class="material-image">
+                    <div class="material-content">
+                        <div class="material-title">Cable USB</div>
+                        <div class="material-description">
+                            Permite conectar tu tarjeta de desarrollo a la computadora para descargar programas y/o realizar la comunicación serial.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Clip de batería -->
+                <div class="material-item">
+                    <img src="https://roborealm-cbtis.github.io/Project-Roborealm/materiales/img/ClipBateria.jpg" alt="Clip de batería con conector" class="material-image">
+                    <div class="material-content">
+                        <div class="material-title">Clip de Batería con Conector</div>
+                        <div class="material-description">
+                            Permite conectar directamente una batería de 9 volts (cuadrada) a la toma de alimentación (jack) de una tarjeta Arduino. Es una forma práctica de alimentar tus circuitos para pruebas.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resistor -->
+                <div class="material-item">
+                    <img src="https://roborealm-cbtis.github.io/Project-Roborealm/materiales/img/Resistor.jpg" alt="Resistor" class="material-image">
+                    <div class="material-content">
+                        <div class="material-title">Resistor</div>
+                        <div class="material-description">
+                            Se denomina resistencia o resistor al componente electrónico diseñado para introducir una resistencia eléctrica determinada entre dos puntos de un circuito eléctrico.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LED RGB -->
+                <div class="material-item">
+                    <img src="https://roborealm-cbtis.github.io/Project-Roborealm/materiales/img/LedRGB.jpg" alt="LED RGB" class="material-image">
+                    <div class="material-content">
+                        <div class="material-title">LED RGB</div>
+                        <div class="material-description">
+                            El sensor es capaz de emitir luz de color por medio de la mezcla de los colores del sistema RGB (rojo, verde y azul), cuenta con tres resistencias de 330Ω en su PCB para evitar que se dañe el dispositivo.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LEDs -->
+                <div class="material-item">
+                    <img src="https://roborealm-cbtis.github.io/Project-Roborealm/materiales/img/Leds.jpg" alt="LEDs" class="material-image">
+                    <div class="material-content">
+                        <div class="material-title">LEDs</div>
+                        <div class="material-description">
+                            Diodos emisores de luz. Componentes que emiten luz cuando pasa corriente eléctrica a través de ellos.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Circuito integrado L293D -->
+                <div class="material-item">
+                    <img src="https://roborealm-cbtis.github.io/Project-Roborealm/materiales/img/Circuitol293d.jpg" alt="Circuito integrado L293D" class="material-image">
+                    <div class="material-content">
+                        <div class="material-title">Circuito Integrado L293D</div>
+                        <div class="material-description">
+                            Este circuito está diseñado para proveer corriente de control bidireccional para motores a pasos y de DC. Puede controlar motores de 4.5V hasta los 36V con una corriente pico máxima de 1A.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sensor de inclinación -->
+                <div class="material-item">
+                    <img src="https://roborealm-cbtis.github.io/Project-Roborealm/materiales/img/SensorInclinacion.jpg" alt="Sensor de inclinación" class="material-image">
+                    <div class="material-content">
+                        <div class="material-title">Sensor de Inclinación</div>
+                        <div class="material-description">
+                            Un sensor de inclinación es un dispositivo que proporciona una señal digital en caso de que su inclinación supere un umbral. Actúa como un sensor que se cierra a partir de una cierta inclinación.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Transistor PN2222 -->
+                <div class="material-item">
+                    <img src="https://roborealm-cbtis.github.io/Project-Roborealm/materiales/img/Transistor.jpg" alt="Transistor PN2222" class="material-image">
+                    <div class="material-content">
+                        <div class="material-title">Transistor PN2222</div>
+                        <div class="material-description">
+                            El transistor PN2222 de pequeña señal diseñado para su uso como amplificador de propósito general NPN de potencia media y adecuados para muchas aplicaciones diferentes.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Diodo 1N4007 -->
+                <div class="material-item">
+                    <img src="https://roborealm-cbtis.github.io/Project-Roborealm/materiales/img/Diodo1n4007.jpg" alt="Diodo 1N4007" class="material-image">
+                    <div class="material-content">
+                        <div class="material-title">Diodo 1N4007</div>
+                        <div class="material-description">
+                            El Diodo Rectificador 1N4007 consiste en permitir el flujo de energía eléctrica en un solo sentido. Polarización directa permite el paso de corriente, polarización inversa impide el paso.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Termistor -->
+                <div class="material-item">
+                    <img src="https://roborealm-cbtis.github.io/Project-Roborealm/materiales/img/Termistor.jpg" alt="Termistor" class="material-image">
+                    <div class="material-content">
+                        <div class="material-title">Termistor</div>
+                        <div class="material-description">
+                            Es un sensor de temperatura resistivo, el cual al cambiar su temperatura, varía su resistencia eléctrica. Podemos aprovechar este efecto para realizar mediciones de temperatura utilizando un divisor resistivo.
+                        </div>
+                    </div>
+                </div>
 
                 <p style="text-align: center; margin-top: 40px;">
-                    <a href="index.html" class="back-button">← Volver al Catálogo</a>
+                    <a href="principios-electronica-arduino-mejorado.html" class="back-button">← Volver al Catálogo</a>
                 </p>
 
             </div>
@@ -447,3 +831,4 @@
 
 </body>
 </html>
+
