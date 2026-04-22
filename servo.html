@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Servo Motor y Sensor Ultrasónico con Arduino</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #000000 0%, #1a0033 50%, #cc0000 100%);
+            color: #fff;
+            min-height: 100vh;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
+
+        .web-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.03;
+            z-index: 0;
+            background-image: 
+                repeating-linear-gradient(45deg, transparent, transparent 35px, #cc0000 35px, #cc0000 37px),
+                repeating-linear-gradient(-45deg, transparent, transparent 35px, #cc0000 35px, #cc0000 37px);
+        }
+
+        .header {
+            min-height: 35vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 50px 20px 30px;
+            position: relative;
+            background: rgba(0, 0, 0, 0.9);
+            border-bottom: 5px solid #cc0000;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '🕷️';
+            position: absolute;
+            top: -20px;
+            right: 5%;
+            font-size: 8rem;
+            opacity: 0.1;
+            z-index: 0;
+            animation: spidermanSwing 4s ease-in-out infinite;
+        }
+
+        .header::after {
+            content: '🕸️';
+            position: absolute;
+            bottom: -10px;
+            left: 5%;
+            font-size: 6rem;
+            opacity: 0.1;
+            z-index: 0;
+        }
+
+        @keyframes spidermanSwing {
+            0%, 100% { transform: rotate(-10deg) translateX(0); }
+            50% { transform: rotate(10deg) translateX(20px); }
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .graffiti-title {
+            font-family: 'Bangers', cursive;
+            font-size: 4rem;
+            color: #cc0000;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+            text-shadow: 
+                3px 3px 0px #000,
+                6px 6px 0px #00d4ff,
+                9px 9px 0px #ffeb3b,
+                -2px -2px 0px #fff,
+                0 0 30px rgba(204, 0, 0, 0.8),
+                0 0 50px rgba(0, 212, 255, 0.6);
+            animation: graffitiPulse 3s ease-in-out infinite;
+            transform: rotate(-2deg);
+        }
+
+        @keyframes graffitiPulse {
+            0%, 100% { transform: rotate(-2deg) scale(1); filter: hue-rotate(0deg); }
+            50% { transform: rotate(2deg) scale(1.02); filter: hue-rotate(5deg); }
+        }
+
+        .back-button {
+            display: inline-block;
+            padding: 12px 30px;
+            margin-top: 15px;
+            background: linear-gradient(135deg, #00d4ff, #0099cc);
+            color: #000;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 212, 255, 0.4);
+            border: 2px solid #fff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .back-button:hover {
+            background: linear-gradient(135deg, #0099cc, #00d4ff);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(0, 212, 255, 0.8);
+        }
+
+        .content-wrapper {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 50px 20px 80px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .content-box {
+            background: linear-gradient(145deg, rgba(26, 0, 51, 0.95), rgba(0, 0, 0, 0.95));
+            border: 4px solid #cc0000;
+            border-radius: 25px;
+            padding: 50px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.8), 0 0 40px rgba(204, 0, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .content-box::before {
+            content: '';
+            position: absolute;
+            top: -3px; left: -3px; right: -3px; bottom: -3px;
+            background: linear-gradient(45deg, #cc0000, #00d4ff, #ffeb3b, #cc0000);
+            border-radius: 25px;
+            opacity: 0;
+            z-index: -1;
+            transition: opacity 0.3s ease;
+            animation: borderRotate 4s linear infinite;
+        }
+
+        @keyframes borderRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .content-box:hover::before { opacity: 0.15; }
+
+        .content-box::after {
+            content: '🕷️';
+            position: absolute;
+            bottom: 20px;
+            right: 30px;
+            font-size: 4rem;
+            opacity: 0.05;
+            z-index: 0;
+        }
+
+        .text-area {
+            position: relative;
+            z-index: 1;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: #e0e0e0;
+        }
+
+        .text-area h2 {
+            font-family: 'Bangers', cursive;
+            font-size: 2rem;
+            color: #cc0000;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 0px #000, 0 0 20px rgba(204, 0, 0, 0.6);
+        }
+
+        .text-area h3 {
+            font-size: 1.3rem;
+            color: #00d4ff;
+            margin: 30px 0 12px;
+            border-left: 4px solid #00d4ff;
+            padding-left: 14px;
+        }
+
+        .text-area p { margin-bottom: 16px; }
+
+        .text-area ul {
+            margin: 14px 0 18px 30px;
+        }
+
+        .text-area ul li {
+            margin-bottom: 10px;
+        }
+
+        .text-area strong { color: #ffeb3b; }
+
+        /* Highlight boxes */
+        .highlight {
+            background: linear-gradient(135deg, rgba(204, 0, 0, 0.15), rgba(0, 0, 0, 0.3));
+            border-left: 5px solid #cc0000;
+            border-radius: 0 15px 15px 0;
+            padding: 20px 25px;
+            margin: 25px 0;
+            font-size: 1rem;
+        }
+
+        .highlight-yellow {
+            background: linear-gradient(135deg, rgba(255, 235, 59, 0.1), rgba(0, 0, 0, 0.3));
+            border-left: 5px solid #ffeb3b;
+            border-radius: 0 15px 15px 0;
+            padding: 20px 25px;
+            margin: 25px 0;
+            font-size: 1rem;
+        }
+
+        .highlight-blue {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(0, 0, 0, 0.3));
+            border-left: 5px solid #00d4ff;
+            border-radius: 0 15px 15px 0;
+            padding: 20px 25px;
+            margin: 25px 0;
+            font-size: 1rem;
+        }
+
+        /* Imagen */
+        .img-block {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .img-block img {
+            max-width: 700px;
+            width: 100%;
+            border-radius: 14px;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .img-block .img-caption {
+            margin-top: 10px;
+            font-size: 0.92rem;
+            color: #aaa;
+            font-style: italic;
+        }
+
+        .img-block.cyan img {
+            box-shadow: 0 5px 25px rgba(0, 212, 255, 0.4);
+            border: 2px solid #00d4ff;
+        }
+
+        /* Tabla de mezclas RGB */
+        .rgb-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 1rem;
+        }
+
+        .rgb-table th {
+            background: rgba(204, 0, 0, 0.4);
+            color: #ffeb3b;
+            padding: 12px 16px;
+            text-align: left;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        .rgb-table td {
+            padding: 11px 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+        }
+
+        .rgb-table tr:hover td {
+            background: rgba(255,255,255,0.04);
+        }
+
+        .color-dot {
+            display: inline-block;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            vertical-align: middle;
+            margin-right: 8px;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        /* Simulador interactivo */
+        .rgb-simulator {
+            background: rgba(0,0,0,0.5);
+            border: 2px solid #00d4ff;
+            border-radius: 18px;
+            padding: 30px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .rgb-simulator h4 {
+            color: #00d4ff;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+
+        .buttons-row {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+
+        .btn-rgb {
+            padding: 14px 28px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-rgb.red   { background: #ff3333; color: #000; box-shadow: 0 0 15px rgba(255,51,51,0.6); }
+        .btn-rgb.green { background: #33ff33; color: #000; box-shadow: 0 0 15px rgba(51,255,51,0.6); }
+        .btn-rgb.blue  { background: #3366ff; color: #fff; box-shadow: 0 0 15px rgba(51,102,255,0.6); }
+
+        .btn-rgb:hover { transform: scale(1.08); }
+        .btn-rgb.active { transform: scale(0.95); filter: brightness(1.4); }
+
+        .color-preview {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            background: #111;
+            border: 3px solid rgba(255,255,255,0.2);
+            transition: background 0.4s ease, box-shadow 0.4s ease;
+            box-shadow: 0 0 20px rgba(0,0,0,0.8);
+        }
+
+        .color-name {
+            font-size: 1.1rem;
+            color: #fff;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        /* Separador */
+        .divider {
+            border: none;
+            border-top: 2px solid rgba(204, 0, 0, 0.3);
+            margin: 40px 0;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(0, 0, 0, 0.9);
+            border-top: 3px solid #cc0000;
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        .footer-spider {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            animation: spin 10s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .footer-text {
+            color: #888;
+            font-size: 0.9rem;
+            margin: 5px 0;
+        }
+
+        @media (max-width: 768px) {
+            .graffiti-title { font-size: 2.5rem; }
+            .content-box { padding: 30px 20px; }
+            .text-area { font-size: 1rem; }
+            .text-area h2 { font-size: 1.6rem; }
+            .text-area h3 { font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="web-pattern"></div>
+
+    <header class="header">
+        <div class="header-content">
+            <h1 class="graffiti-title">SERVO MOTOR Y SENSOR ULTRASÓNICO CON ARDUINO</h1>
+            <a href="index.html" class="back-button">← Volver al Inicio</a>
+        </div>
+    </header>
+
+    <div class="content-wrapper">
+        <div class="content-box">
+            <div class="text-area">
+
+                <h2>📡 Arduino UNO con Sensor Ultrasónico HC-SR04 y Servo Motor</h2>
+
+                <h3>📡 Circuito: Arduino UNO con Sensor Ultrasónico HC-SR04 y Servo Motor</h3>
+
+                <div class="img-block cyan">
+                    <img src="Captura_de_pantalla_2026-04-22_123203.png" alt="Circuito Arduino UNO con sensor ultrasónico HC-SR04 y servo motor">
+                    <p class="img-caption">Figura 1 — Circuito con Arduino UNO, sensor de distancia HC-SR04 y servo motor. El servo gira según la distancia detectada por el sensor.</p>
+                </div>
+
+                <p>En esta imagen se muestra un circuito que combina tres componentes principales conectados a un <strong>Arduino UNO</strong>:</p>
+
+                <ul>
+                    <li><strong>Sensor ultrasónico HC-SR04</strong> (parte superior): mide la distancia a objetos emitiendo pulsos de sonido y detectando su eco. Tiene 4 pines: <strong>VCC</strong> (5V), <strong>GND</strong> (tierra), <strong>TRIG</strong> (disparo) y <strong>ECHO</strong> (eco), todos conectados al Arduino a través del protoboard.</li>
+                    <li><strong>Servo motor SG90</strong> (parte inferior): motor de posición controlada. Recibe una señal PWM desde el Arduino que determina el ángulo al que gira (0° a 180°). Tiene tres cables: <strong>rojo</strong> (VCC 5V), <strong>negro/café</strong> (GND) y <strong>naranja/amarillo</strong> (señal de control).</li>
+                    <li><strong>Protoboard (breadboard)</strong>: actúa como punto de distribución para los rieles de alimentación (rojo = 5V, negro/azul = GND), permitiendo conectar ambos dispositivos sin necesidad de soldar.</li>
+                </ul>
+
+                <div class="highlight-yellow">
+                    <strong>⚙️ ¿Cómo funciona este circuito?</strong>
+                    <p style="margin-top: 8px;">El Arduino envía un pulso al pin <strong>TRIG</strong> del HC-SR04. El sensor emite una onda ultrasónica y espera el rebote en el pin <strong>ECHO</strong>. Con el tiempo que tarda el eco, el Arduino calcula la distancia. Según ese valor, envía una señal PWM al servo para girarlo proporcionalmente: <strong>objeto cerca → el servo gira a un ángulo menor; objeto lejos → el servo gira más</strong>. Es la base de sistemas de radar, puertas automáticas y robots de evitación de obstáculos.</p>
+                </div>
+
+                <h3>🧰 Lista de materiales del circuito</h3>
+                <table class="rgb-table">
+                    <thead>
+                        <tr>
+                            <th>Componente</th>
+                            <th>Cantidad</th>
+                            <th>Función</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Arduino UNO</strong></td>
+                            <td>1</td>
+                            <td>Microcontrolador principal; procesa datos y controla el servo</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sensor HC-SR04</strong></td>
+                            <td>1</td>
+                            <td>Mide distancia por ultrasonido (2 cm – 400 cm)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Servo motor SG90</strong></td>
+                            <td>1</td>
+                            <td>Gira de 0° a 180° según la distancia detectada</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Protoboard (breadboard)</strong></td>
+                            <td>1</td>
+                            <td>Distribuye la alimentación y organiza las conexiones</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Cables Dupont (M-M / M-H)</strong></td>
+                            <td>~10</td>
+                            <td>Conectan el Arduino, sensor y servo a la protoboard</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Cable USB tipo B</strong></td>
+                            <td>1</td>
+                            <td>Alimenta y programa el Arduino desde la computadora</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="highlight-blue">
+                    <strong>🔌 Conexiones clave (pines del Arduino)</strong>
+                    <p style="margin-top: 8px;">
+                        • <strong>HC-SR04 VCC</strong> → 5V del Arduino &nbsp;|&nbsp; <strong>HC-SR04 GND</strong> → GND<br>
+                        • <strong>HC-SR04 TRIG</strong> → Pin digital (ej. D9) &nbsp;|&nbsp; <strong>HC-SR04 ECHO</strong> → Pin digital (ej. D10)<br>
+                        • <strong>Servo señal</strong> → Pin PWM del Arduino (ej. D6) &nbsp;|&nbsp; <strong>Servo VCC</strong> → 5V &nbsp;|&nbsp; <strong>Servo GND</strong> → GND
+                    </p>
+                </div>
+
+                <hr class="divider">
+                <h3>💻 Lógica del código Arduino</h3>
+
+                <p>Para programar este circuito en Arduino, la lógica es la siguiente:</p>
+
+                <ul>
+                    <li>Se incluye la librería <code>#include &lt;Servo.h&gt;</code> para controlar el servo motor fácilmente.</li>
+                    <li>Los pines <strong>TRIG</strong> y <strong>ECHO</strong> del HC-SR04 se configuran como <code>OUTPUT</code> e <code>INPUT</code> respectivamente.</li>
+                    <li>En el <code>loop()</code>, se envía un pulso de 10 microsegundos al pin <strong>TRIG</strong> con <code>digitalWrite()</code>.</li>
+                    <li>Se mide el tiempo que tarda el eco con <code>pulseIn(echoPin, HIGH)</code> y se convierte a centímetros dividiendo entre 58.</li>
+                    <li>Con <code>map(distancia, 2, 200, 0, 180)</code> se convierte la distancia a un ángulo de 0° a 180°.</li>
+                    <li>Finalmente, <code>servo.write(angulo)</code> mueve el servo a la posición calculada.</li>
+                </ul>
+
+                <div class="highlight">
+                    <strong>🤖 ¿Por qué es importante este circuito?</strong>
+                    <p style="margin-top: 8px;">La combinación de un sensor ultrasónico con un servo motor es la base de proyectos como <strong>radares caseros, brazos robóticos reactivos, puertas automáticas y sistemas de evitación de obstáculos</strong>. Conecta conceptos de <strong>programación, electrónica, física del sonido y mecánica</strong> en un solo proyecto.</p>
+                </div>
+
+                <p style="text-align: center; margin-top: 40px;">
+                    <a href="index.html" class="back-button">← Volver al Catálogo</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-spider">🕷️</div>
+        <p class="footer-text">"Anyone can wear the mask... Anyone can learn Arduino!"</p>
+        <p class="footer-text">Miles Morales Edition - Electrónica y Programación</p>
+        <p class="footer-text">© 2024 Principios de la Electrónica con Arduino</p>
+        <p class="footer-text" style="margin-top: 15px; color: #cc0000;">⚡ El conocimiento es tu superpoder ⚡</p>
+    </footer>
+
+
+</body>
+</html>
